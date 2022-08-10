@@ -6,6 +6,8 @@ use std::fs::File;
 use std::io::BufReader;
 use std::io::prelude::*;
 use std::fmt;
+use eyre::Result;
+use tracing::{};
 
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -20,7 +22,7 @@ struct SongPlay {
     master_metadata_track_name: Option<String>,
     ms_played: Option<u64>,
     offline: Option<bool>,
-    offline_timestamp: u64,
+    offline_timestamp: Option<u64>,
     platform: Option<String>,
     reason_end: Option<String>,
     reason_start: Option<String>,
@@ -34,16 +36,47 @@ struct SongPlay {
 }
 
 
-fn main() -> std::io::Result<()>{
-    
-    let input_file = File::open("/Users/jjmarch/Repos/spotify-history-analyzer/data/endsong_0.json")?;
+fn get_song_plays_from_file(file_path: &String) -> Result<Vec<SongPlay>> {
+    let input_file = File::open(file_path)?;
     let mut buf_reader = BufReader::new(input_file);
     let mut contents = String::new();
     buf_reader.read_to_string(&mut contents)?;
+    
+    let song_play_data: Vec<SongPlay> = serde_json::from_str(&contents).expect("JSON was not well-formatted"); 
+    
+    Ok(song_play_data)
+}
 
 
-    let song_play_data: Vec<SongPlay> = serde_json::from_str(&mut contents).expect("JSON was not well-formatted"); 
+fn get_song_history_file_paths(base_path: &String, num_files: i32) -> Vec<String> {
+   
+    let mut file_paths = vec![];
 
-    println!("{:?}", song_play_data[0]);
+
+    for i in 0..num_files {
+        let path = format!("{}endsong_{}.json", base_path, i);
+
+        file_paths.push(path);
+    } 
+
+    file_paths
+}
+
+fn main() -> Result<()>{
+    
+    let base_path = "/Users/jjmarch/Repos/spotify-history-analyzer/data/".to_owned();
+    let mut all_song_plays = vec![];
+
+    let song_history_files_paths = get_song_history_file_paths(&base_path, 8);
+
+    for path in song_history_files_paths.iter() {
+        
+        if let Ok(mut single_file_song_plays) = get_song_plays_from_file(&path) {
+            all_song_plays.append(&mut single_file_song_plays);
+        }
+    }
+
+
+    println!("{:?}", all_song_plays[0]);
     Ok(())
 }
