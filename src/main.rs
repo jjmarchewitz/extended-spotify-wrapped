@@ -120,17 +120,6 @@ fn main() -> Result<()> {
     }
 
     // Put the structs from the values of the HashMap into a Vec
-    // let mut sorted_playtime_data: Vec<SongEntry> = total_playtime_data_map
-    //     .into_iter()
-    //     .map(|(_uri, song_entry)| song_entry)
-    //     .collect::<Vec<SongEntry>>();
-
-    println!(
-        "Size of original HashMap: {}",
-        total_playtime_data_map.len()
-    );
-
-    // Put the structs from the values of the HashMap into a Vec
     let mut sorted_playtime_data: Vec<SongEntry> = total_playtime_data_map
         .clone()
         .into_iter()
