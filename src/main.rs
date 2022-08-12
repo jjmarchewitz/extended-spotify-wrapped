@@ -1,12 +1,9 @@
-#![allow(unused_imports)]
-
-mod aggregators;
+mod aggregate;
 mod dates;
 mod json_loading;
 mod util;
 
-use aggregators::{AlbumData, ArtistData, SongData, SortMusicDataBy};
-use chrono::prelude::*;
+// use chrono::prelude::*;
 use eyre::Result;
 
 fn main() -> Result<()> {
@@ -21,20 +18,26 @@ fn main() -> Result<()> {
     // Extra whitespace
     println!("\n");
 
-    let new_min_date = "2021-05-01T00:00:00Z".parse::<DateTime<Utc>>().unwrap();
-    let new_max_date = "2021-08-20T00:00:00Z".parse::<DateTime<Utc>>().unwrap();
+    // let new_min_date = "2021-05-01T00:00:00Z".parse::<DateTime<Utc>>().unwrap();
+    // let new_max_date = "2021-08-20T00:00:00Z".parse::<DateTime<Utc>>().unwrap();
 
-    let filtered_data =
-        dates::get_played_items_between_dates(&all_played_items, new_min_date, new_max_date);
+    // let filtered_data =
+    //     dates::get_played_items_between_dates(&all_played_items, new_min_date, new_max_date);
 
-    let sorted_playtime_data = aggregators::get_aggregated_data::<SongData>(
-        &filtered_data,
-        SortMusicDataBy::TotalListenTime,
+    // let sorted_playtime_data = aggregators::get_aggregated_data::<SongData>(
+    //     &filtered_data,
+    //     SortSpotifyDataBy::TotalListenTime,
+    //     true,
+    // );
+
+    let sorted_playtime_data = aggregate::get_aggregated_data::<aggregate::EpisodeData>(
+        &all_played_items,
+        aggregate::SortSpotifyDataBy::TotalListenTime,
         true,
     );
 
-    // Print top 10
-    for i in 0..10 {
+    // Print top 5
+    for i in 0..5 {
         println!("{}. {}", i + 1, sorted_playtime_data[i]);
     }
 

@@ -1,5 +1,3 @@
-use std::fmt::format;
-
 pub fn get_total_listen_time_from_ms(listen_time_ms: u64) -> String {
     let weeks = listen_time_ms / 604_800_000;
     let mut ms_already_counted = weeks * 604_800_000;
