@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 pub struct TotalListenTime {
     pub weeks: u64,
     pub days: u64,
