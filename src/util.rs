@@ -1,15 +1,6 @@
-#![allow(dead_code)]
+use std::fmt::format;
 
-pub struct TotalListenTime {
-    pub weeks: u64,
-    pub days: u64,
-    pub hours: u64,
-    pub minutes: u64,
-    pub seconds: u64,
-    pub miliseconds: u64,
-}
-
-pub fn get_total_listen_time_from_ms(listen_time_ms: u64) -> TotalListenTime {
+pub fn get_total_listen_time_from_ms(listen_time_ms: u64) -> String {
     let weeks = listen_time_ms / 604_800_000;
     let mut ms_already_counted = weeks * 604_800_000;
 
@@ -27,12 +18,31 @@ pub fn get_total_listen_time_from_ms(listen_time_ms: u64) -> TotalListenTime {
 
     let remaining_ms = listen_time_ms - ms_already_counted;
 
-    TotalListenTime {
-        weeks,
-        days,
-        hours,
-        minutes,
-        seconds,
-        miliseconds: remaining_ms,
+    // Return an appropriate string based on the longest period of time that has a non-zero value
+    let mut output: String = "".to_owned();
+
+    if weeks != 0 {
+        output.push_str(&format!(
+            "{}w {}d {}h {}m {}s {}ms",
+            weeks, days, hours, minutes, seconds, remaining_ms
+        ));
+    } else if days != 0 {
+        output.push_str(&format!(
+            "{}d {}h {}m {}s {}ms",
+            days, hours, minutes, seconds, remaining_ms
+        ));
+    } else if hours != 0 {
+        output.push_str(&format!(
+            "{}h {}m {}s {}ms",
+            hours, minutes, seconds, remaining_ms
+        ));
+    } else if minutes != 0 {
+        output.push_str(&format!("{}m {}s {}ms", minutes, seconds, remaining_ms));
+    } else if seconds != 0 {
+        output.push_str(&format!("{}s {}ms", seconds, remaining_ms));
+    } else {
+        output.push_str(&format!("{}ms ", remaining_ms));
     }
+
+    output
 }

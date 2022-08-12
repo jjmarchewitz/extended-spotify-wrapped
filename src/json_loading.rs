@@ -5,7 +5,9 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
 
-#[derive(Debug, Deserialize, Serialize)]
+/// A struct that represents one entry of an end_song.json file. This struct represents a single "play" of
+/// a single song/podcast.
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct PlayedItem {
     pub conn_country: Option<String>,
     pub episode_name: Option<String>,
@@ -30,6 +32,7 @@ pub struct PlayedItem {
     pub username: Option<String>,
 }
 
+///
 fn get_song_plays_from_file(file_path: &String) -> Result<Vec<PlayedItem>> {
     let input_file = File::open(file_path)?;
     let mut buf_reader = BufReader::new(input_file);
