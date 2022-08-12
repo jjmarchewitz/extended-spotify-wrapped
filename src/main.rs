@@ -30,15 +30,15 @@ fn main() -> Result<()> {
     //     true,
     // );
 
-    let sorted_data = aggregate::get_aggregated_data::<aggregate::SongData>(
+    let sorted_data = aggregate::get_aggregated_data::<aggregate::EpisodeData>(
         &all_played_items,
         aggregate::SortSpotifyDataBy::TotalListenTime,
         true,
     );
 
-    // Print first several results from
+    // Print first several results from sorted_data
     for (i, item) in sorted_data.iter().enumerate() {
-        if i == 11 {
+        if i == 5 {
             break;
         }
 

@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use crate::json_loading::PlayedItem;
 use crate::util;
 use std::collections::HashMap;
@@ -86,9 +88,10 @@ impl SpotifyData for SongData {
         self.play_count += 1;
     }
 
+    // Returns the track URi as the key
     fn get_key_from_track_info(played_item: &PlayedItem) -> String {
-        match &played_item.master_metadata_track_name {
-            Some(track_name) => track_name.to_owned(),
+        match &played_item.spotify_track_uri {
+            Some(track_uri) => track_uri.to_owned(),
             None => "".to_owned(),
         }
     }
@@ -171,10 +174,17 @@ impl SpotifyData for AlbumData {
         self.play_count += 1;
     }
 
+    // Returns a formatted string with the album and artist as the key
     fn get_key_from_track_info(played_item: &PlayedItem) -> String {
-        match &played_item.master_metadata_album_album_name {
-            Some(album_name) => album_name.to_owned(),
-            None => "".to_owned(),
+        if let PlayedItem {
+            master_metadata_album_album_name: Some(album_name),
+            master_metadata_album_artist_name: Some(artist_name),
+            ..
+        } = played_item
+        {
+            format!("{} by {}", album_name, artist_name)
+        } else {
+            "".to_owned()
         }
     }
 
@@ -251,6 +261,7 @@ impl SpotifyData for ArtistData {
         self.play_count += 1;
     }
 
+    // Returns the artist name as the key
     fn get_key_from_track_info(played_item: &PlayedItem) -> String {
         match &played_item.master_metadata_album_artist_name {
             Some(artist_name) => artist_name.to_owned(),
@@ -335,9 +346,10 @@ impl SpotifyData for EpisodeData {
         self.play_count += 1;
     }
 
+    // Returns the episode URi as the key
     fn get_key_from_track_info(played_item: &PlayedItem) -> String {
-        match &played_item.episode_name {
-            Some(episode_name) => episode_name.to_owned(),
+        match &played_item.spotify_episode_uri {
+            Some(episode_uri) => episode_uri.to_owned(),
             None => "".to_owned(),
         }
     }
@@ -415,6 +427,7 @@ impl SpotifyData for PodcastData {
         self.play_count += 1;
     }
 
+    // Returns the name of the podcast name as the key
     fn get_key_from_track_info(played_item: &PlayedItem) -> String {
         match &played_item.episode_show_name {
             Some(podcast_name) => podcast_name.to_owned(),
