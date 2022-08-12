@@ -3,7 +3,7 @@ use chrono::prelude::*;
 use eyre::{eyre, Result};
 
 pub fn get_min_and_max_dates_from_played_items(
-    all_played_items: &Vec<PlayedItem>,
+    all_played_items: &[PlayedItem],
 ) -> (Result<DateTime<Utc>>, Result<DateTime<Utc>>) {
     let mut min_date_res: Result<DateTime<Utc>> =
         Err(eyre!("Failed to find a minimum date in PlayedItems"));
@@ -46,7 +46,7 @@ pub fn get_min_and_max_dates_from_played_items(
 }
 
 pub fn get_played_items_between_dates(
-    all_played_items: &Vec<PlayedItem>,
+    all_played_items: &[PlayedItem],
     start_date: DateTime<Utc>,
     end_date: DateTime<Utc>,
 ) -> Vec<PlayedItem> {

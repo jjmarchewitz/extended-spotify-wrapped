@@ -17,30 +17,23 @@ pub fn get_total_listen_time_from_ms(listen_time_ms: u64) -> String {
     let remaining_ms = listen_time_ms - ms_already_counted;
 
     // Return an appropriate string based on the longest period of time that has a non-zero value
-    let mut output: String = "".to_owned();
-
     if weeks != 0 {
-        output.push_str(&format!(
+        format!(
             "{}w {}d {}h {}m {}s {}ms",
             weeks, days, hours, minutes, seconds, remaining_ms
-        ));
+        )
     } else if days != 0 {
-        output.push_str(&format!(
+        format!(
             "{}d {}h {}m {}s {}ms",
             days, hours, minutes, seconds, remaining_ms
-        ));
+        )
     } else if hours != 0 {
-        output.push_str(&format!(
-            "{}h {}m {}s {}ms",
-            hours, minutes, seconds, remaining_ms
-        ));
+        format!("{}h {}m {}s {}ms", hours, minutes, seconds, remaining_ms)
     } else if minutes != 0 {
-        output.push_str(&format!("{}m {}s {}ms", minutes, seconds, remaining_ms));
+        format!("{}m {}s {}ms", minutes, seconds, remaining_ms)
     } else if seconds != 0 {
-        output.push_str(&format!("{}s {}ms", seconds, remaining_ms));
+        format!("{}s {}ms", seconds, remaining_ms)
     } else {
-        output.push_str(&format!("{}ms ", remaining_ms));
+        format!("{}ms", remaining_ms)
     }
-
-    output
 }

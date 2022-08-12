@@ -102,16 +102,15 @@ impl SpotifyData for SongData {
     }
 
     fn played_item_is_valid_for_aggregation(played_item: &PlayedItem) -> bool {
-        if let PlayedItem {
-            master_metadata_album_album_name: Some(_),
-            master_metadata_album_artist_name: Some(_),
-            master_metadata_track_name: Some(_),
-            .. // Ignore all other fields of played_item
-        } = played_item {
-            true
-        } else {
-            false
-        }
+        matches!(
+            played_item,
+            PlayedItem {
+                master_metadata_album_album_name: Some(_),
+                master_metadata_album_artist_name: Some(_),
+                master_metadata_track_name: Some(_),
+                .. // Ignore all other fields of played_item
+            }
+        )
     }
 }
 
@@ -188,16 +187,15 @@ impl SpotifyData for AlbumData {
     }
 
     fn played_item_is_valid_for_aggregation(played_item: &PlayedItem) -> bool {
-        if let PlayedItem {
-            master_metadata_album_album_name: Some(_),
-            master_metadata_album_artist_name: Some(_),
-            master_metadata_track_name: Some(_),
-            .. // Ignore all other fields of played_item
-        } = played_item {
-            true
-        } else {
-            false
-        }
+        matches!(
+            played_item,
+            PlayedItem {
+                master_metadata_album_album_name: Some(_),
+                master_metadata_album_artist_name: Some(_),
+                master_metadata_track_name: Some(_),
+                .. // Ignore all other fields of played_item
+            }
+        )
     }
 }
 
@@ -269,16 +267,15 @@ impl SpotifyData for ArtistData {
     }
 
     fn played_item_is_valid_for_aggregation(played_item: &PlayedItem) -> bool {
-        if let PlayedItem {
-            master_metadata_album_album_name: Some(_),
-            master_metadata_album_artist_name: Some(_),
-            master_metadata_track_name: Some(_),
-            .. // Ignore all other fields of played_item
-        } = played_item {
-            true
-        } else {
-            false
-        }
+        matches!(
+            played_item,
+            PlayedItem {
+                master_metadata_album_album_name: Some(_),
+                master_metadata_album_artist_name: Some(_),
+                master_metadata_track_name: Some(_),
+                .. // Ignore all other fields of played_item
+            }
+        )
     }
 }
 
@@ -354,15 +351,14 @@ impl SpotifyData for EpisodeData {
     }
 
     fn played_item_is_valid_for_aggregation(played_item: &PlayedItem) -> bool {
-        if let PlayedItem {
-            episode_show_name: Some(_),
-            episode_name: Some(_),
-            .. // Ignore all other fields of played_item
-        } = played_item {
-            true
-        } else {
-            false
-        }
+        matches!(
+            played_item,
+            PlayedItem {
+                episode_show_name: Some(_),
+                episode_name: Some(_),
+                .. // Ignore all other fields of played_item
+            }
+        )
     }
 }
 
@@ -435,15 +431,14 @@ impl SpotifyData for PodcastData {
     }
 
     fn played_item_is_valid_for_aggregation(played_item: &PlayedItem) -> bool {
-        if let PlayedItem {
-            episode_show_name: Some(_),
-            episode_name: Some(_),
-            .. // Ignore all other fields of played_item
-        } = played_item {
-            true
-        } else {
-            false
-        }
+        matches!(
+            played_item,
+            PlayedItem {
+                episode_show_name: Some(_),
+                episode_name: Some(_),
+                .. // Ignore all other fields of played_item
+            }
+        )
     }
 }
 
@@ -472,7 +467,7 @@ pub enum SortSpotifyDataBy {
 /// Returns aggregated data about the PlayedItems in all_played_items. For instance, this function can return
 /// the top artists by play count, and it can also get the bottom songs by total listen time.
 pub fn get_aggregated_data<T: Clone + SpotifyData>(
-    all_played_items: &Vec<PlayedItem>,
+    all_played_items: &[PlayedItem],
     sory_by: SortSpotifyDataBy,
     sort_descending: bool,
 ) -> Vec<T> {
@@ -485,8 +480,8 @@ pub fn get_aggregated_data<T: Clone + SpotifyData>(
         if T::played_item_is_valid_for_aggregation(played_item) {
             if let Some(ms_played) = played_item.ms_played {
                 let song_data = aggregated_data
-                    .entry(T::get_key_from_track_info(&played_item))
-                    .or_insert(T::from_track_info(&played_item));
+                    .entry(T::get_key_from_track_info(played_item))
+                    .or_insert_with(|| T::from_track_info(played_item));
 
                 song_data.add_time_to_ms_played(&ms_played);
                 song_data.increment_play_count();

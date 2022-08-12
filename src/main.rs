@@ -24,21 +24,25 @@ fn main() -> Result<()> {
     // let filtered_data =
     //     dates::get_played_items_between_dates(&all_played_items, new_min_date, new_max_date);
 
-    // let sorted_playtime_data = aggregators::get_aggregated_data::<SongData>(
+    // let sorted_data = aggregators::get_aggregated_data::<SongData>(
     //     &filtered_data,
     //     SortSpotifyDataBy::TotalListenTime,
     //     true,
     // );
 
-    let sorted_playtime_data = aggregate::get_aggregated_data::<aggregate::EpisodeData>(
+    let sorted_data = aggregate::get_aggregated_data::<aggregate::SongData>(
         &all_played_items,
         aggregate::SortSpotifyDataBy::TotalListenTime,
         true,
     );
 
-    // Print top 5
-    for i in 0..5 {
-        println!("{}. {}", i + 1, sorted_playtime_data[i]);
+    // Print first several results from
+    for (i, item) in sorted_data.iter().enumerate() {
+        if i == 11 {
+            break;
+        }
+
+        println!("{}. {}", i + 1, item);
     }
 
     Ok(())
