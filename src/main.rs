@@ -4,14 +4,19 @@ mod gui;
 mod json_loading;
 mod util;
 
+use eframe::egui;
 use eyre::Result;
 
 fn main() -> Result<()> {
-    let options = eframe::NativeOptions::default();
+    let options = eframe::NativeOptions {
+        decorated: true,
+        min_window_size: Some(egui::vec2(600.0, 600.0)),
+        ..Default::default()
+    };
     eframe::run_native(
-        "My egui App",
+        "Extended Spotify Wrapped",
         options,
-        Box::new(|cc| Box::new(gui::SpotifyAnalyzerApp::new(&cc))),
+        Box::new(|cc| Box::new(gui::ExtendedSpotifyWrappedApp::new(&cc))),
     );
 }
 
