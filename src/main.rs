@@ -18,6 +18,8 @@ fn main() -> Result<()> {
         options,
         Box::new(|cc| Box::new(gui::ExtendedSpotifyWrappedApp::new(&cc))),
     );
+
+    Ok(())
 }
 
 // fn main() -> Result<()> {
