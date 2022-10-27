@@ -1,7 +1,9 @@
+use egui;
+
 /// We derive Deserialize/Serialize so we can persist app state on shutdown.
 #[derive(serde::Deserialize, serde::Serialize)]
 #[serde(default)] // if we add new fields, give them default values when deserializing old state
-pub struct TemplateApp {
+pub struct ESWApp {
     // Example stuff:
     label: String,
 
@@ -10,7 +12,7 @@ pub struct TemplateApp {
     value: f32,
 }
 
-impl Default for TemplateApp {
+impl Default for ESWApp {
     fn default() -> Self {
         Self {
             // Example stuff:
@@ -20,11 +22,40 @@ impl Default for TemplateApp {
     }
 }
 
-impl TemplateApp {
+impl ESWApp {
     /// Called once before the first frame.
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
         // This is also where you can customized the look at feel of egui using
         // `cc.egui_ctx.set_visuals` and `cc.egui_ctx.set_fonts`.
+
+        // Mutably get the default fonts
+        let mut fonts = egui::FontDefinitions::default();
+
+        // Define the font name
+        let custom_font_name = "CircularStd".to_owned();
+
+        // Add the custom font to the default fonts
+        fonts.font_data.insert(
+            custom_font_name.clone(),
+            egui::FontData::from_static(include_bytes!("../assets/fonts/CircularStd-Medium.otf")),
+        );
+
+        // Put custom font as the first priority for proportional fonts
+        fonts
+            .families
+            .entry(egui::FontFamily::Proportional)
+            .or_default()
+            .insert(0, custom_font_name.clone());
+
+        // Put custom font as last fallback for monospace:
+        fonts
+            .families
+            .entry(egui::FontFamily::Monospace)
+            .or_default()
+            .push(custom_font_name.clone());
+
+        // Tell egui to use the new fonts
+        cc.egui_ctx.set_fonts(fonts);
 
         // Load previous app state (if any).
         // Note that you must enable the `persistence` feature for this to work.
@@ -36,7 +67,7 @@ impl TemplateApp {
     }
 }
 
-impl eframe::App for TemplateApp {
+impl eframe::App for ESWApp {
     /// Called by the frame work to save state before shutdown.
     fn save(&mut self, storage: &mut dyn eframe::Storage) {
         eframe::set_value(storage, eframe::APP_KEY, self);

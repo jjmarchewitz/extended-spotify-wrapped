@@ -11,7 +11,7 @@ fn main() {
     eframe::run_native(
         "Extended Spotify Wrapped",
         native_options,
-        Box::new(|cc| Box::new(extended_spotify_wrapped::TemplateApp::new(cc))),
+        Box::new(|cc| Box::new(extended_spotify_wrapped::ESWApp::new(cc))),
     );
 }
 
@@ -28,7 +28,7 @@ fn main() {
     eframe::start_web(
         "the_canvas_id", // hardcode it
         web_options,
-        Box::new(|cc| Box::new(extended_spotify_wrapped::TemplateApp::new(cc))),
+        Box::new(|cc| Box::new(extended_spotify_wrapped::ESWApp::new(cc))),
     )
     .expect("failed to start eframe");
 }
