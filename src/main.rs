@@ -9,7 +9,7 @@ fn main() {
 
     let native_options = eframe::NativeOptions::default();
     eframe::run_native(
-        "eframe template",
+        "Extended Spotify Wrapped",
         native_options,
         Box::new(|cc| Box::new(extended_spotify_wrapped::TemplateApp::new(cc))),
     );
