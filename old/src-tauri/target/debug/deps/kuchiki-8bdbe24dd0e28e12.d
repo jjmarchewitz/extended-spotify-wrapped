@@ -1,0 +1,13 @@
+/Users/jjmarch/Repos/extended-spotify-wrapped/src-tauri/target/debug/deps/kuchiki-8bdbe24dd0e28e12.rmeta: /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/lib.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/attributes.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/cell_extras.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/iter.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/node_data_ref.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/parser.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/select.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/serializer.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/tree.rs
+
+/Users/jjmarch/Repos/extended-spotify-wrapped/src-tauri/target/debug/deps/kuchiki-8bdbe24dd0e28e12.d: /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/lib.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/attributes.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/cell_extras.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/iter.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/node_data_ref.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/parser.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/select.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/serializer.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/tree.rs
+
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/lib.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/attributes.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/cell_extras.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/iter.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/node_data_ref.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/parser.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/select.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/serializer.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.8.1/src/tree.rs:

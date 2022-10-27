@@ -1,0 +1,11 @@
+/Users/jjmarch/Repos/extended-spotify-wrapped/src-tauri/target/debug/deps/libtauri_macros-2304ab4d85740706.dylib: /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/lib.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/command/mod.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/command/handler.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/command/wrapper.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/command_module.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/runtime.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/context.rs
+
+/Users/jjmarch/Repos/extended-spotify-wrapped/src-tauri/target/debug/deps/tauri_macros-2304ab4d85740706.d: /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/lib.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/command/mod.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/command/handler.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/command/wrapper.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/command_module.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/runtime.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/context.rs
+
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/lib.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/command/mod.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/command/handler.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/command/wrapper.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/command_module.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/runtime.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/tauri-macros-1.0.4/src/context.rs:

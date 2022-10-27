@@ -1,0 +1,11 @@
+/Users/jjmarch/Repos/extended-spotify-wrapped/src-tauri/target/debug/deps/futures_task-c1c85695034c0e3b.rmeta: /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/lib.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/spawn.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/arc_wake.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/waker.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/waker_ref.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/future_obj.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/noop_waker.rs
+
+/Users/jjmarch/Repos/extended-spotify-wrapped/src-tauri/target/debug/deps/futures_task-c1c85695034c0e3b.d: /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/lib.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/spawn.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/arc_wake.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/waker.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/waker_ref.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/future_obj.rs /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/noop_waker.rs
+
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/lib.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/spawn.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/arc_wake.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/waker.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/waker_ref.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/future_obj.rs:
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-task-0.3.24/src/noop_waker.rs:

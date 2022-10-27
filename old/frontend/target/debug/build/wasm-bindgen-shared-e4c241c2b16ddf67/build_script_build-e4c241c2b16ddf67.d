@@ -1,0 +1,5 @@
+/Users/jjmarch/Repos/extended-spotify-wrapped/frontend/target/debug/build/wasm-bindgen-shared-e4c241c2b16ddf67/build_script_build-e4c241c2b16ddf67: /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-shared-0.2.82/build.rs
+
+/Users/jjmarch/Repos/extended-spotify-wrapped/frontend/target/debug/build/wasm-bindgen-shared-e4c241c2b16ddf67/build_script_build-e4c241c2b16ddf67.d: /Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-shared-0.2.82/build.rs
+
+/Users/jjmarch/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-shared-0.2.82/build.rs:

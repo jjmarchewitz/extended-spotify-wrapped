@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/Users/jjmarch/Repos/extended-spotify-wrapped/src-tauri/target/debug/build/typenum-bbbd944f7adb252c/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/Users/jjmarch/Repos/extended-spotify-wrapped/src-tauri/target/debug/build/typenum-bbbd944f7adb252c/out/op.rs

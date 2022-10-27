@@ -1,0 +1,9 @@
+error[E0554]: `#![feature]` may not be used on the stable release channel
+ --> /Users/jjmarch/Repos/extended-spotify-wrapped/target/debug/build/eyre-ce2076ed698ff33a/out/probe.rs:2:16
+  |
+2 |     #![feature(backtrace)]
+  |                ^^^^^^^^^
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0554`.
