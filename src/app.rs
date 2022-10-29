@@ -1,23 +1,52 @@
+use crate::json_loading;
 use egui;
+use std::path;
 
 /// We derive Deserialize/Serialize so we can persist app state on shutdown.
 #[derive(serde::Deserialize, serde::Serialize)]
 #[serde(default)] // if we add new fields, give them default values when deserializing old state
 pub struct ESWApp {
     // Example stuff:
-    label: String,
+    app_title: String,
 
-    // this how you opt-out of serialization of a member
+    // File loading
+    raw_data_path: Option<path::PathBuf>,
     #[serde(skip)]
-    value: f32,
+    data_is_loaded: bool,
+    #[serde(skip)]
+    loaded_data: Option<Vec<json_loading::PlayedItem>>,
+    #[serde(skip)]
+    attempted_to_load_data: bool,
+    #[serde(skip)]
+    loading_error_msg: Option<String>,
 }
 
 impl Default for ESWApp {
     fn default() -> Self {
         Self {
-            // Example stuff:
-            label: "Hello World!".to_owned(),
-            value: 2.7,
+            app_title: "Extended Spotify Wrapped".to_owned(),
+            data_is_loaded: false,
+            raw_data_path: None,
+            loaded_data: None,
+            attempted_to_load_data: false,
+            loading_error_msg: None,
+        }
+    }
+}
+
+impl eframe::App for ESWApp {
+    /// Called by the frame work to save state before shutdown.
+    fn save(&mut self, storage: &mut dyn eframe::Storage) {
+        eframe::set_value(storage, eframe::APP_KEY, self);
+    }
+
+    /// Called each time the UI needs repainting, which may be many times per second.
+    /// Put your widgets into a `SidePanel`, `TopPanel`, `CentralPanel`, `Window` or `Area`.
+    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        if !self.data_is_loaded {
+            self.loading_screen(ctx, _frame);
+        } else {
+            self.data_screen(ctx, _frame);
         }
     }
 }
@@ -28,6 +57,24 @@ impl ESWApp {
         // This is also where you can customized the look at feel of egui using
         // `cc.egui_ctx.set_visuals` and `cc.egui_ctx.set_fonts`.
 
+        // FIXME: Custom fonts don't work when compiled for wasm
+        #[cfg(not(target_arch = "wasm32"))]
+        ESWApp::set_custom_fonts(&cc);
+
+        // Set up custom visuals
+        ESWApp::set_custom_visuals(&cc);
+
+        // Load previous app state (if any).
+        // Note that you must enable the `persistence` feature for this to work.
+        if let Some(storage) = cc.storage {
+            return eframe::get_value(storage, eframe::APP_KEY).unwrap_or_default();
+        }
+
+        Default::default()
+    }
+
+    /// Sets the font to be Circular Std.
+    fn set_custom_fonts(cc: &eframe::CreationContext<'_>) {
         // Mutably get the default fonts
         let mut fonts = egui::FontDefinitions::default();
 
@@ -56,92 +103,78 @@ impl ESWApp {
 
         // Tell egui to use the new fonts
         cc.egui_ctx.set_fonts(fonts);
-
-        // Load previous app state (if any).
-        // Note that you must enable the `persistence` feature for this to work.
-        if let Some(storage) = cc.storage {
-            return eframe::get_value(storage, eframe::APP_KEY).unwrap_or_default();
-        }
-
-        Default::default()
-    }
-}
-
-impl eframe::App for ESWApp {
-    /// Called by the frame work to save state before shutdown.
-    fn save(&mut self, storage: &mut dyn eframe::Storage) {
-        eframe::set_value(storage, eframe::APP_KEY, self);
     }
 
-    /// Called each time the UI needs repainting, which may be many times per second.
-    /// Put your widgets into a `SidePanel`, `TopPanel`, `CentralPanel`, `Window` or `Area`.
-    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        let Self { label, value } = self;
+    /// Sets up custom visual settings
+    fn set_custom_visuals(cc: &eframe::CreationContext<'_>) {}
 
-        // Examples of how to create different panels and windows.
-        // Pick whichever suits you.
-        // Tip: a good default choice is to just keep the `CentralPanel`.
-        // For inspiration and more examples, go to https://emilk.github.io/egui
+    /// Display the loading screen to let the user select the folder containing their spotify data
+    fn loading_screen(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        egui::CentralPanel::default().show(ctx, |ui| {
+            ui.with_layout(egui::Layout::top_down(egui::Align::Center), |ui| {
+                ui.add_space(ctx.available_rect().height() / 3.);
+                ui.label("Select the unzipped folder containing your Spotify data.");
 
-        #[cfg(not(target_arch = "wasm32"))] // no File->Quit on web pages!
-        egui::TopBottomPanel::top("top_panel").show(ctx, |ui| {
-            // The top panel is often a good place for a menu bar:
-            egui::menu::bar(ui, |ui| {
-                ui.menu_button("File", |ui| {
-                    if ui.button("Quit").clicked() {
-                        _frame.close();
+                // If the open folder button is pressed, open a file dialog and store the result
+                if ui.button("Open Folder").clicked() {
+                    if let Some(path) = rfd::FileDialog::new().pick_folder() {
+                        self.raw_data_path = Some(path);
                     }
-                });
-            });
+                }
+
+                // If a data path has been selected, attempt to load it
+                if let Some(path) = &self.raw_data_path {
+                    // TODO: Load data on separate thread?
+                    match json_loading::extract_song_plays_from_json_files_at_path(&path) {
+                        Ok(data) => {
+                            self.loaded_data = Some(data);
+                            self.data_is_loaded = true;
+                        }
+                        Err(e) => {
+                            // Clear self.raw_data_path if loading the persisted path does not work
+                            if !self.attempted_to_load_data {
+                                self.raw_data_path = None;
+                            }
+                            // Else show the given error message
+                            else {
+                                self.loading_error_msg = Some(e.to_string())
+                            }
+                        }
+                    }
+
+                    self.attempted_to_load_data = true;
+                }
+
+                // Display an error message if there is one
+                if let Some(error_str) = &self.loading_error_msg {
+                    ui.label(error_str);
+                }
+            })
+        });
+    }
+
+    /// Display the data screen to let the user analyze their data
+    fn data_screen(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        egui::SidePanel::left("side_panel").show(ctx, |ui| {
+            ui.heading("Filter");
         });
 
-        egui::SidePanel::left("side_panel").show(ctx, |ui| {
-            ui.heading("Side Panel");
-
-            ui.horizontal(|ui| {
-                ui.label("Write something: ");
-                ui.text_edit_singleline(label);
-            });
-
-            ui.add(egui::Slider::new(value, 0.0..=10.0).text("value"));
-            if ui.button("Increment").clicked() {
-                *value += 1.0;
-            }
-
-            ui.with_layout(egui::Layout::bottom_up(egui::Align::LEFT), |ui| {
-                ui.horizontal(|ui| {
-                    ui.spacing_mut().item_spacing.x = 0.0;
-                    ui.label("powered by ");
-                    ui.hyperlink_to("egui", "https://github.com/emilk/egui");
-                    ui.label(" and ");
-                    ui.hyperlink_to(
-                        "eframe",
-                        "https://github.com/emilk/egui/tree/master/crates/eframe",
-                    );
-                    ui.label(".");
-                });
-            });
+        egui::TopBottomPanel::bottom("bottom_panel").show(ctx, |ui| {
+            ui.heading("Bottom Panel");
         });
 
         egui::CentralPanel::default().show(ctx, |ui| {
-            // The central panel the region left after adding TopPanel's and SidePanel's
-
-            ui.heading("eframe template");
-            ui.hyperlink("https://github.com/emilk/eframe_template");
-            ui.add(egui::github_link_file!(
-                "https://github.com/emilk/eframe_template/blob/master/",
-                "Source code."
-            ));
-            egui::warn_if_debug_build(ui);
+            ui.heading("Results");
+            ui.with_layout(
+                egui::Layout::top_down(egui::Align::Center).with_cross_justify(true),
+                |ui| {
+                    egui::ScrollArea::vertical().show(ui, |ui| {
+                        for i in 1..63 {
+                            ui.label(format!("text {}", u64::pow(2, i)).to_owned());
+                        }
+                    });
+                },
+            );
         });
-
-        if false {
-            egui::Window::new("Window").show(ctx, |ui| {
-                ui.label("Windows can be moved by dragging them.");
-                ui.label("They are automatically sized based on contents.");
-                ui.label("You can turn on resizing and scrolling if you like.");
-                ui.label("You would normally chose either panels OR windows.");
-            });
-        }
     }
 }
